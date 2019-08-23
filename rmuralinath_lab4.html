@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ITMD 565 Lab 4 - RAKSHIT MURALINATH</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+	<script src="https://maxcdn.bootstrapcdn. com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<style>
+	#emptable td {
+		color: blue;
+	}
+#emptable tr:nth-child(even){
+background-color: #f2f2f2;
+}
+</style
+</head>
+
+<body>
+	<div class="container">
+	   <div class="table-responsive">
+			<h1 align="center">ITMD 565 - Lab_4 </h1>
+			<h2 align="center">RAKSHIT MURALINATH - rmuralinath@hawk.iit.edu</h2>
+			<br>
+			<div align ="center" id="buttonwrapper">
+			<button id="LoadButton">Load Data</button>
+			<button id="ResetButton">Reset</button>
+			<br> <br> 
+			</div>
+			<h3 align="center">Employee List</h3>
+			<br>			
+			<table class="table table-secondary table-bordered " id="emptable">
+				<tr>
+					<th>ID</th>
+					<th>Gender</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Active</th>
+					<th>Title</th>			
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">	
+	 var Load = document.getElementById('LoadButton');
+	 var reset = document.getElementById('ResetButton');
+	 var table = document.getElementById('emptable');
+	 document.getElementById("ResetButton").disabled = true;
+	  Load.style.cursor = 'pointer';
+	  reset.style.cursor = 'pointer';	 
+	 document.getElementById('LoadButton').addEventListener('click', function(){
+             
+			var rows = table.getElementsByTagName("tr");
+			while (rows.length > 1) {
+				rows[1].parentNode.removeChild(rows[1]);
+			}	  					
+	 document.getElementById("ResetButton").disabled = false;
+	 LoadButton.style.cursor = 'pointer';
+	 ResetButton.style.cursor = 'pointer';
+	 
+        var http_request = new XMLHttpRequest();
+		 http_request.onreadystatechange = function(){
+            if (http_request.readyState === 4) {
+                if (http_request.status === 200){                   
+                    console.log(JSON.parse(http_request.responseText));
+                    var request_variable = JSON.parse(http_request.responseText);              
+				
+					table.classList.add("table-striped"); 
+                    for(var i = 0; i < request_variable.length; i++)
+                     { 
+                        console.log(request_variable[i]);  
+                        var Table_row = document.createElement('tr');
+                        var Table_data = document.createElement('td');
+                        var InputData = document.createTextNode(request_variable[i].id);
+                        Table_data.appendChild(InputData);
+                        Table_row.appendChild(Table_data);
+
+                        var genderelement = document.createElement('td');
+                        var gendertext = document.createTextNode(request_variable[i].gender);
+                        genderelement.appendChild(gendertext);
+                        Table_row.appendChild(genderelement);
+						
+                        var fnameelement = document.createElement('td');
+                        var fnametext = document.createTextNode(request_variable[i].first_name);
+                        fnameelement.appendChild(fnametext);
+                        Table_row.appendChild(fnameelement);
+						
+						var lnameelement = document.createElement('td');
+                        var lnametext = document.createTextNode(request_variable[i].last_name);
+                        lnameelement.appendChild(lnametext);
+                        Table_row.appendChild(lnameelement);
+
+                        var emailelement = document.createElement('td');
+                        var emailtext = document.createTextNode(request_variable[i].email);
+                        emailelement.appendChild(emailtext);
+                        Table_row.appendChild(emailelement);                       
+
+                        var activeelement = document.createElement('td');
+                        var activetext = document.createTextNode(request_variable[i].active);  
+							if(request_variable[i].active == true)
+							 {
+								activeelement.classList.add("table-success");
+							 }
+						if(request_variable[i].active == false)
+							 {
+								activeelement.classList.add("table-danger");
+
+							}
+                        activeelement.appendChild(activetext); 
+                        Table_row.appendChild(activeelement);
+
+						var titleelement = document.createElement('td');
+                        var titletext = document.createTextNode(request_variable[i].title);
+                        titleelement.appendChild(titletext);
+                        Table_row.appendChild(titleelement);                    
+										
+                        table.appendChild(Table_row);
+                        document.getElementById('LoadButton').disabled=true;
+                    } 
+                    document.getElementById('emptable').appendChild(table);
+
+                }	 
+            }	
+        };
+        http_request.open('GET', 'http://libertyville.rice.iit.edu/scripts/4565_lab4.php', true);		       
+        http_request.send();		
+    });	
+			reset.addEventListener('click', function(){                
+                document.getElementById("ResetButton").disabled = true; 
+                document.getElementById("LoadButton").disabled = false;
+
+				var rows = table.getElementsByTagName("tr");
+			while (rows.length > 1) 
+			{
+				rows[1].parentNode.removeChild(rows[1]);
+			}	
+				}
+				);        
+								
+</script>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ITMD-565 Lab 4 - Canvas Drawing</title>
+	<style type="text/css">
+		#content-wrapper {
+			width: 600px;
+			margin: 0 auto;
+			text-align: center;
+		}
+		#canvasRun {
+			background-color: #c00;
+			border: 0;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div id="content-wrapper">
+		<button id="canvasRun">Draw Canvas</button><br><br>
+		<canvas id="myCanvas" width="600" height="450"></canvas>
+	</div>
+	<script type="text/javascript">
+			var canvas = document.getElementById('myCanvas');
+            var d1 = 0;
+            var d2 = 180;
+            var d3 = 0;
+            var ctx = canvas.getContext('2d');
+          document.getElementById('canvasRun').addEventListener('click', drawCanvas, false);
+            function drawCanvas() {
+
+							document.getElementById("canvasRun").disabled = true;
+							var grd = ctx.createLinearGradient(0,0,0,450);
+							grd.addColorStop(1,"black");
+							grd.addColorStop(0,"white");
+							ctx.fillStyle = grd;
+							ctx.fillRect(10,10,600,450);
+							ctx.font = "bold 32px Sans-serif ";
+							ctx.fillStyle = "red";
+							ctx.textAlign = "center";
+							ctx.fillText("ITMD 565 Canvas Lab", canvas.width/2, canvas.height/10);
+							ctx.beginPath();
+							ctx.moveTo(30, 60);
+							ctx.lineTo(580, 60);
+							ctx.strokeStyle = "red";
+							ctx.setLineDash([0]);
+							ctx.lineWidth = 5;
+							ctx.stroke();
+							ctx.closePath();
+							ctx.restore();
+							var img = new Image();
+							img.src = "IIT_SAT_stack_186_white.png";
+							ctx.drawImage(img, 390, 380, 196.72, 48.5);
+							ctx.save();
+							ctx.restore();
+							var cX = canvas.width / 5;
+							var cY = canvas.height / 3;
+							var radius = 65;
+							ctx.beginPath();
+							ctx.arc(cX, cY, radius, 0, 2 * Math.PI, false);
+							ctx.fillStyle = "#0000C8";
+							ctx.fill();
+							ctx.lineWidth = 2;
+							ctx.strokeStyle = 'white';
+							ctx.setLineDash([0]);
+							ctx.stroke();
+							ctx.closePath();
+							ctx.beginPath();
+							ctx.moveTo(120, 250);
+							ctx.lineTo(50, 350);
+							ctx.lineTo(190, 350);
+							ctx.closePath();
+							ctx.fillStyle = "#00C800";
+							ctx.lineWidth = .5;
+							ctx.strokeStyle = "black";
+							ctx.fill();
+							ctx.stroke();
+							ctx.closePath();
+							ctx.font = "14px Sans-serif";
+							ctx.fillStyle = "white";
+							ctx.textAlign = "left";
+							ctx.fillText("RAKSHIT MURALINATH", 40, 400);
+							ctx.fillText("rmuralinath@hawk.iit.edu", 40, 420);
+							ctx.beginPath();
+							ctx.moveTo(30, 60);
+							ctx.lineTo(580, 60);
+							ctx.strokeStyle = "red";
+							ctx.stroke();
+							ctx.closePath();
+							ctx.beginPath();
+							ctx.fillRect(270, 250, 300,100);
+							ctx.stroke();
+							ctx.moveTo(300, 305);
+							ctx.quadraticCurveTo(365, 250 , 430, 305);
+							ctx.quadraticCurveTo(495, 365 , 558, 305);
+							ctx.lineWidth = 2;
+							ctx.strokeStyle = 'black';
+							ctx.setLineDash([8]);
+							ctx.stroke();
+							ctx.closePath();
+                window.requestAnimationFrame(drawFrame);
+   }
+            function drawFrame(){
+                console.log('request frame2');
+                ctx.beginPath();
+                ctx.fillStyle = '#cc0000';
+					 ctx.save();
+					 ctx.translate(500, 160);
+					 ctx.rotate((Math.PI/180) * d3);
+					 ctx.fillRect(-50, -50, 100, 100);
+					 ctx.strokeStyle = '#FFFFFF';
+					 ctx.setLineDash([0]);
+					 ctx.lineWidth = 5;
+					 ctx.strokeRect(-50,-50, 100, 100);
+					 ctx.restore();
+					 d3 = d3 +2;
+					console.log(d1);
+					console.log(d2);
+					ctx.save();
+					ctx.arc(340,160,50,((Math.PI/180)*d1),(Math.PI/180)*d2);
+					console.log(d2);
+					ctx.strokeStyle = '#FFA500';
+					ctx.setLineDash([0]);
+					ctx.lineWidth = 10;
+					ctx.stroke();
+                d1= d1+6;
+                d2 = d2+6;
+                ctx.restore();
+                window.requestAnimationFrame(drawCanvas);
+            }
+	</script>
+</body>
+</html>
